@@ -67,6 +67,8 @@ git clone https://github.com/AlexandreRouma/hackrf
 
 git clone https://github.com/AlexandreRouma/librtlsdr
 
+git clone https://github.com/ericek111/libmirisdr-5
+
 wget https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.14.tar.xz
 tar -xvf libxml2-2.9.14.tar.xz
 mv libxml2-2.9.14 libxml2
@@ -231,6 +233,20 @@ build_librtlsdr x86
 build_librtlsdr x86_64
 build_librtlsdr armeabi-v7a
 build_librtlsdr arm64-v8a
+
+build_libmirisdr() { # [android_abi]
+    echo "===================== libmirisdr ($1) ====================="
+    cd libmirisdr-5
+    mkdir -p build_$1 && cd build_$1
+    cmake $(gen_cmake_args $1) $(gen_cmake_libusb_args $1) ..
+    make $MAKEOPTS
+    make DESTDIR=$SDR_KIT_ROOT/$1 install
+    cd ../../
+}
+build_libmirisdr x86
+build_libmirisdr x86_64
+build_libmirisdr armeabi-v7a
+build_libmirisdr arm64-v8a
 
 # Build libxml2
 build_libxml2() { # [android_abi]
