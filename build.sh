@@ -49,9 +49,9 @@ wget http://www.fftw.org/fftw-3.3.10.tar.gz
 tar -zxvf fftw-3.3.10.tar.gz
 mv fftw-3.3.10 fftw
 
-wget https://github.com/drowe67/codec2/archive/refs/tags/v1.0.5.zip
+wget https://github.com/drowe67/codec2-dev/archive/refs/tags/v1.0.5.zip
 7z x v1.0.5.zip
-mv codec2-1.0.5 codec2
+mv codec2-dev-1.0.5 codec2
 
 wget https://github.com/libusb/libusb/releases/download/v1.0.25/libusb-1.0.25.tar.bz2
 tar -xvf libusb-1.0.25.tar.bz2
@@ -65,7 +65,7 @@ git clone https://github.com/airspy/airspyone_host
 
 git clone https://github.com/AlexandreRouma/hackrf
 
-git clone https://github.com/AlexandreRouma/librtlsdr
+git clone https://github.com/AlexandreRouma/rtl-sdr
 
 git clone https://github.com/ericek111/libmirisdr-5
 
@@ -222,9 +222,9 @@ build_libhackrf arm64-v8a
 # Build librtlsdr
 build_librtlsdr() { # [android_abi]
     echo "===================== librtlsdr ($1) ====================="
-    cd librtlsdr
+    cd rtl-sdr
     mkdir -p build_$1 && cd build_$1
-    cmake $(gen_cmake_args $1) $(gen_cmake_libusb_args $1) ..
+    cmake $(gen_cmake_args $1) $(gen_cmake_libusb_args $1) -DBUILD_UTILITIES=OFF ..
     make $MAKEOPTS
     make DESTDIR=$SDR_KIT_ROOT/$1 install
     cd ../../
